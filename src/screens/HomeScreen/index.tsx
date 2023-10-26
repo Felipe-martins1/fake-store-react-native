@@ -53,11 +53,11 @@ export function HomeScreen() {
   }
 
   function renderListEmptyComponent() {
-    if (isFetching) return <Text>Loading...</Text>;
+    if (isFetching) return <Text testID="loadingText">Loading...</Text>;
 
-    if (isError) return <Text>Oops...An unexpected error occurred</Text>;
+    if (isError) return <Text testID="errorText">Oops...An unexpected error occurred</Text>;
 
-    return <Text>No products found</Text>;
+    return <Text testID="notFoundText">No products found</Text>;
   }
 
   return (

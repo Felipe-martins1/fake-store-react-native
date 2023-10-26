@@ -9,7 +9,7 @@ import { HomeScreen } from './index';
 
 import { render, userEvent } from '@testing-library/react-native';
 
-const mockCategories = ['Category 1', 'Category 2', 'Category 3'];
+const mockCategories = ['Category 1', 'Category 2', 'Category 3', 'Error Category'];
 
 const mockProducts = [
   { id: 1, title: 'Product 1', category: 'Category 1', image: 'sample-image.jpg', price: '19.99' },
@@ -46,12 +46,11 @@ jest.mock(
   } => ({
     productsService: {
       findAll: jest.fn(({ category }) => {
+        if (category === 'Error Category') return Promise.reject(new Error('Error'));
+
         if (category) {
           const filteredProducts = mockProducts.filter((product) => product.category === category);
-          if (filteredProducts.length) {
-            return Promise.resolve(filteredProducts);
-          }
-          return Promise.reject(new Error('Error'));
+          return Promise.resolve(filteredProducts);
         }
         return Promise.resolve(mockProducts);
       }),
@@ -65,11 +64,11 @@ describe('<HomeScreen/>', () => {
   });
 
   it('renders loading state', async () => {
-    const { getByText } = render(<HomeScreen />, {
+    const { getByTestId } = render(<HomeScreen />, {
       wrapper,
     });
 
-    expect(getByText('Loading...')).toBeTruthy();
+    expect(getByTestId('loadingText')).toBeTruthy();
   });
 
   it('renders products when data is available', async () => {
@@ -109,13 +108,31 @@ describe('<HomeScreen/>', () => {
 
     const user = userEvent.setup();
 
+    const categoryElement = await findByTestId('Error Category');
+
+    expect(categoryElement).toBeTruthy();
+
+    await user.press(categoryElement);
+
+    const errorElement = await findByTestId('errorText');
+
+    expect(errorElement).toBeTruthy();
+  });
+
+  it('renders not found text', async () => {
+    const { findByText, findByTestId } = render(<HomeScreen />, {
+      wrapper,
+    });
+
+    const user = userEvent.setup();
+
     const categoryElement = await findByTestId('Category 3');
 
     expect(categoryElement).toBeTruthy();
 
     await user.press(categoryElement);
 
-    const errorElement = await findByText('Oops...An unexpected error occurred');
+    const errorElement = await findByTestId('notFoundText');
 
     expect(errorElement).toBeTruthy();
   });
