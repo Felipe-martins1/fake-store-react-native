@@ -11,18 +11,22 @@ describe('<ProductList />', () => {
   };
 
   it('should render the product name and price', () => {
-    const { getByTestId, getByText } = render(<ProductCard product={product} onPress={() => {}} />);
+    const { getByTestId, getByText } = render(
+      <ProductCard product={product} onPressAddToCart={() => {}} />,
+    );
 
     expect(getByTestId('productCard')).toBeTruthy();
     expect(getByText(product.title)).toBeTruthy();
     expect(getByText(`$${product.price}`)).toBeTruthy();
   });
 
-  it('should invoke the onPress function when pressed', () => {
+  it('should invoke the onPress function when "add to cart" button is pressed', () => {
     const onPressMock = jest.fn();
-    const { getByTestId } = render(<ProductCard product={product} onPress={onPressMock} />);
+    const { getByTestId } = render(
+      <ProductCard product={product} onPressAddToCart={onPressMock} />,
+    );
 
-    const productCard = getByTestId('productCard');
+    const productCard = getByTestId('addToCartButton');
     fireEvent.press(productCard);
 
     expect(onPressMock).toHaveBeenCalledWith(product);
