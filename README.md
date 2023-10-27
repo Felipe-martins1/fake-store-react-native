@@ -31,3 +31,10 @@ Para informações mais detalhadas sobre o expo acesse:
    ```bash
     npx expo start
     ```
+
+## Como Executar os Testes
+
+1. Acesse a pasta do projeto, abra o terminal e execute:
+   ```bash
+    npm run test
+    ```
