@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useCart, CartActionTypes, CartProduct as CartProductType } from '@src/context/CartContext';
 import { CartProduct } from '@src/components/CartProduct';
-
+import { styles } from './styles';
 export function CartScreen() {
   const { cartState, dispatch } = useCart();
 
@@ -85,84 +85,3 @@ export function CartScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    justifyContent: 'space-between',
-  },
-  cartItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    paddingBottom: 10,
-  },
-  productImage: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
-  },
-  productInfo: {
-    flex: 1,
-  },
-  productName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  productPrice: {
-    fontSize: 14,
-  },
-  quantityControls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  controlButton: {
-    backgroundColor: 'black',
-    padding: 8,
-    borderRadius: 8,
-  },
-  controlButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  quantityText: {
-    marginHorizontal: 10,
-    fontSize: 16,
-  },
-  removeButton: {
-    backgroundColor: 'red',
-    padding: 8,
-    borderRadius: 8,
-  },
-  removeButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  buyButton: {
-    backgroundColor: 'green',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buyButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  totalText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  emptyCartText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});

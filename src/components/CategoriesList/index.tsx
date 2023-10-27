@@ -1,5 +1,6 @@
-import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View, TouchableOpacity } from 'react-native';
 import { mergeStyles } from '@src/utils/styles';
+import { styles } from './styles';
 
 type Props = {
   categories: string[];
@@ -42,36 +43,3 @@ export function CategoriesList({ categories, selected = ALL_CATEGORY, onSelect }
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  listHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  listHeaderTitle: {
-    color: 'black',
-    fontWeight: '500',
-  },
-  contentContainer: {
-    paddingBottom: 10,
-  },
-  itemSeparator: {
-    width: 10,
-  },
-  item: {
-    padding: 6,
-    borderRadius: 8,
-    backgroundColor: 'white',
-  },
-  selectedItem: {
-    backgroundColor: 'green',
-  },
-
-  itemText: {
-    color: 'black',
-  },
-  selectedItemText: {
-    color: 'white',
-  },
-});
