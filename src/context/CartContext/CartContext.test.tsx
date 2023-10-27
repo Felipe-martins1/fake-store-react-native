@@ -105,4 +105,28 @@ describe('CartContext', () => {
 
     expect(result.current.cartState.items[0].quantity).toBe(1);
   });
+
+  it('should clear product from cart', () => {
+    const { result } = renderHook(() => useCart(), {
+      wrapper: CartProvider,
+    });
+
+    const { dispatch } = result.current;
+
+    act(() => {
+      dispatch({
+        type: CartActionTypes.ADD_TO_CART,
+        payload: mockedProduct,
+      });
+    });
+
+    act(() => {
+      dispatch({
+        type: CartActionTypes.CLEAR_PRODUCT_FROM_CART,
+        payload: mockedProduct,
+      });
+    });
+
+    expect(result.current.cartState.items.length).toBe(0);
+  });
 });

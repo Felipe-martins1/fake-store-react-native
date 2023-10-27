@@ -5,9 +5,10 @@ export enum CartActionTypes {
   ADD_TO_CART = 'ADD_TO_CART',
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
   CLEAR_CART = 'CLEAR_CART',
+  CLEAR_PRODUCT_FROM_CART = 'CLEAR_PRODUCT_FROM_CART',
 }
 
-type CartProduct = {
+export type CartProduct = {
   product: Product;
   quantity: number;
 };
@@ -16,10 +17,15 @@ type State = {
   items: CartProduct[];
 };
 
-type Action = {
-  type: CartActionTypes;
-  payload: Product;
-};
+type Action =
+  | {
+      type: CartActionTypes;
+      payload: Product;
+    }
+  | {
+      type: CartActionTypes.CLEAR_CART;
+      payload: null;
+    };
 
 const cartReducer = (state: State, action: Action) => {
   function findExistingItem(product: Product) {
@@ -64,6 +70,12 @@ const cartReducer = (state: State, action: Action) => {
         };
       }
       return state;
+
+    case CartActionTypes.CLEAR_PRODUCT_FROM_CART:
+      return {
+        ...state,
+        items: state.items.filter((item) => item.product.id !== action.payload.id),
+      };
 
     case CartActionTypes.CLEAR_CART:
       return {
