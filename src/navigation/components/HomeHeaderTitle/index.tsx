@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { ShoppingCart } from 'lucide-react-native';
 import { useCart } from '@src/context/CartContext';
 
-export const HomeHeaderTitle = () => {
+export function HomeHeaderTitle() {
   const { cartState } = useCart();
 
   const totalItems = cartState.items.length;
@@ -20,7 +20,7 @@ export const HomeHeaderTitle = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { Product } from '@src/services/products.service';
 
 export enum CartActionTypes {
   ADD_TO_CART = 'ADD_TO_CART',
@@ -6,27 +7,64 @@ export enum CartActionTypes {
   CLEAR_CART = 'CLEAR_CART',
 }
 
+type CartProduct = {
+  product: Product;
+  quantity: number;
+};
+
 type State = {
-  items: any[];
+  items: CartProduct[];
 };
 
 type Action = {
   type: CartActionTypes;
-  payload: any;
+  payload: Product;
 };
 
 const cartReducer = (state: State, action: Action) => {
+  function findExistingItem(product: Product) {
+    return state.items.find((item) => item.product.id === product.id);
+  }
+
+  function increaseQuantity(product: Product) {
+    return state.items.map((item) =>
+      item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
+    );
+  }
+
+  function decreaseQuantity(product: Product) {
+    return state.items
+      .map((item) =>
+        item.product.id === product.id
+          ? { ...item, quantity: Math.max(0, item.quantity - 1) }
+          : item,
+      )
+      .filter((item) => item.quantity > 0);
+  }
+
   switch (action.type) {
     case CartActionTypes.ADD_TO_CART:
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
+      if (findExistingItem(action.payload)) {
+        return {
+          ...state,
+          items: increaseQuantity(action.payload),
+        };
+      } else {
+        return {
+          ...state,
+          items: [...state.items, { product: action.payload, quantity: 1 }],
+        };
+      }
+
     case CartActionTypes.REMOVE_FROM_CART:
-      return {
-        ...state,
-        items: state.items.filter((item) => item.id !== action.payload.id),
-      };
+      if (findExistingItem(action.payload)) {
+        return {
+          ...state,
+          items: decreaseQuantity(action.payload),
+        };
+      }
+      return state;
+
     case CartActionTypes.CLEAR_CART:
       return {
         ...state,
@@ -37,16 +75,24 @@ const cartReducer = (state: State, action: Action) => {
   }
 };
 
+const initialCartState: State = {
+  items: [],
+};
+
+const initialCartContext = {
+  cartState: initialCartState,
+  dispatch: (action: Action) => {},
+};
+
 const CartContext = createContext<{
   cartState: State;
   dispatch: React.Dispatch<Action>;
 }>({
-  cartState: { items: [] },
-  dispatch: (action: Action) => {},
+  ...initialCartContext,
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cartState, dispatch] = useReducer(cartReducer, { items: [] });
+  const [cartState, dispatch] = useReducer(cartReducer, initialCartState);
 
   return <CartContext.Provider value={{ cartState, dispatch }}>{children}</CartContext.Provider>;
 };
