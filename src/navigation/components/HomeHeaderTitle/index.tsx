@@ -1,8 +1,12 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ShoppingCart } from 'lucide-react-native';
 import { useCart } from '@src/context/CartContext';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '@src/navigation';
 
 export function HomeHeaderTitle() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const { cartState } = useCart();
 
   const totalItems = cartState.items.length;
@@ -10,14 +14,17 @@ export function HomeHeaderTitle() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Our Products</Text>
-      <View style={styles.cartIconContainer} testID="cartIcon">
+      <TouchableOpacity
+        style={styles.cartIconContainer}
+        testID="cartIcon"
+        onPress={() => navigation.navigate('Cart')}>
         {totalItems > 0 && (
           <Text style={styles.cartItemCount} testID="cartItemCount">
             {totalItems}
           </Text>
         )}
         <ShoppingCart size={24} color="black" />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
