@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { HomeScreen } from '@src/screens/HomeScreen';
-import { Text } from 'react-native';
+import { HomeHeaderTitle } from '@src/navigation/components/HomeHeaderTitle';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +12,7 @@ export function Routes() {
         name="Home"
         component={HomeScreen}
         options={{
-          headerTitle: 'Nossos Produtos',
+          headerTitle: HomeHeaderTitle,
         }}
       />
     </Tab.Navigator>
