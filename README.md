@@ -1,6 +1,4 @@
-# Nome do Seu Projeto
-
-Descrição breve do seu projeto.
+# Fake Store React Native
 
 ![GitHub language count](https://img.shields.io/github/languages/count/Felipe-martins1/fake-store-react-native?color=%2304D361)
 ![Repository size](https://img.shields.io/github/repo-size/Felipe-martins1/fake-store-react-native)
@@ -32,4 +30,11 @@ Para informações mais detalhadas sobre o expo acesse:
     ```
    ```bash
     npx expo start
+    ```
+
+## Como Executar os Testes
+
+1. Acesse a pasta do projeto, abra o terminal e execute:
+   ```bash
+    npm run test
     ```
