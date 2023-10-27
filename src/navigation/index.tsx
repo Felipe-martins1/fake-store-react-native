@@ -1,20 +1,32 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen } from '@src/screens/HomeScreen';
 import { HomeHeaderTitle } from '@src/navigation/components/HomeHeaderTitle';
+import { CartScreen } from '@src/screens/CartScreen';
 
-const Tab = createBottomTabNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  Cart: undefined;
+};
 
+const Stack = createStackNavigator<RootStackParamList>();
 export function Routes() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
+    <Stack.Navigator>
+      <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{
           headerTitle: HomeHeaderTitle,
         }}
       />
-    </Tab.Navigator>
+      <Stack.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{
+          presentation: 'modal',
+        }}
+      />
+    </Stack.Navigator>
   );
 }
