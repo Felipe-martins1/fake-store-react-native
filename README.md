@@ -24,7 +24,11 @@ Ecomerce de produtos utilizando a api fakestoreapi.com.
 Para informações mais detalhadas sobre o expo acesse:
 [Expo](https://docs.expo.dev/overview/)
 
-1. Clone o repositório, acesse a pasta e execute:
+1. Clone o repositório repositório
+
+2. Crie um arquivo .env com o mesmo conteúdo do arquivo .env.example
+
+3. Acesse a pasta e execute:
    ```bash
     npm install
     ```
